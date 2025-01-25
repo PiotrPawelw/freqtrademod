@@ -1,0 +1,2 @@
+import{_ as t}from"./BCard.vue_vue_type_script_setup_true_lang-DoeLCt4a-Ck9YYkBV.js";import{_,c,b as o,v as a,o as r,br as s}from"./index-BNCVPFy5.js";const i={},d={class:"container"};function f(m,l){const e=s,n=t;return r(),c("div",d,[o(n,{header:"Freqtrade bot Login"},{default:a(()=>[o(e,{ref:"loginForm"},null,512)]),_:1})])}const g=_(i,[["render",f],["__scopeId","data-v-4184d9f2"]]);export{g as default};
+//# sourceMappingURL=LoginView-D0ypOwRk.js.map
