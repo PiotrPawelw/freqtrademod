@@ -54,6 +54,7 @@ class b(IStrategy):
     You should keep:
     - timeframe, minimal_roi, stoploss, trailing_*
     """
+
     # Strategy interface version - allow new iterations of the strategy interface.
     # Check the documentation or the Sample strategy to get the latest version.
     INTERFACE_VERSION = 3
@@ -66,11 +67,7 @@ class b(IStrategy):
 
     # Minimal ROI designed for the strategy.
     # This attribute will be overridden if the config file contains "minimal_roi".
-    minimal_roi = {
-        "60": 0.01,
-        "30": 0.02,
-        "0": 0.04
-    }
+    minimal_roi = {"60": 0.01, "30": 0.02, "0": 0.04}
 
     # Optimal stoploss designed for the strategy.
     # This attribute will be overridden if the config file contains "stoploss".
@@ -95,19 +92,17 @@ class b(IStrategy):
 
     # Strategy parameters
     buy_rsi = IntParameter(10, 40, default=30, space="buy")
-    sell_rsi = IntParameter(60, 90, default=70, space="sell")# Optional order type mapping.
+    sell_rsi = IntParameter(60, 90, default=70, space="sell")  # Optional order type mapping.
     order_types = {
         "entry": "limit",
         "exit": "limit",
         "stoploss": "market",
-        "stoploss_on_exchange": False
+        "stoploss_on_exchange": False,
     }
 
     # Optional order time in force.
-    order_time_in_force = {
-        "entry": "GTC",
-        "exit": "GTC"
-    }
+    order_time_in_force = {"entry": "GTC", "exit": "GTC"}
+
     @property
     def plot_config(self):
         return {
@@ -124,8 +119,8 @@ class b(IStrategy):
                 },
                 "RSI": {
                     "rsi": {"color": "red"},
-                }
-            }
+                },
+            },
         }
 
     def informative_pairs(self):
@@ -241,13 +236,12 @@ class b(IStrategy):
         dataframe["bb_lowerband"] = bollinger["lower"]
         dataframe["bb_middleband"] = bollinger["mid"]
         dataframe["bb_upperband"] = bollinger["upper"]
-        dataframe["bb_percent"] = (
-            (dataframe["close"] - dataframe["bb_lowerband"]) /
-            (dataframe["bb_upperband"] - dataframe["bb_lowerband"])
+        dataframe["bb_percent"] = (dataframe["close"] - dataframe["bb_lowerband"]) / (
+            dataframe["bb_upperband"] - dataframe["bb_lowerband"]
         )
-        dataframe["bb_width"] = (
-            (dataframe["bb_upperband"] - dataframe["bb_lowerband"]) / dataframe["bb_middleband"]
-        )
+        dataframe["bb_width"] = (dataframe["bb_upperband"] - dataframe["bb_lowerband"]) / dataframe[
+            "bb_middleband"
+        ]
 
         # Bollinger Bands - Weighted (EMA based instead of SMA)
         # weighted_bollinger = qtpylib.weighted_bollinger_bands(
@@ -369,12 +363,15 @@ class b(IStrategy):
         """
         dataframe.loc[
             (
-                (qtpylib.crossed_above(dataframe["rsi"], self.buy_rsi.value)) &  # Signal: RSI crosses above buy_rsi
-                (dataframe["tema"] <= dataframe["bb_middleband"]) &  # Guard: tema below BB middle
-                (dataframe["tema"] > dataframe["tema"].shift(1)) &  # Guard: tema is raising
-                (dataframe["volume"] > 0)  # Make sure Volume is not 0
+                (
+                    qtpylib.crossed_above(dataframe["rsi"], self.buy_rsi.value)
+                )  # Signal: RSI crosses above buy_rsi
+                & (dataframe["tema"] <= dataframe["bb_middleband"])  # Guard: tema below BB middle
+                & (dataframe["tema"] > dataframe["tema"].shift(1))  # Guard: tema is raising
+                & (dataframe["volume"] > 0)  # Make sure Volume is not 0
             ),
-            "enter_long"] = 1
+            "enter_long",
+        ] = 1
         # Uncomment to use shorts (Only used in futures/margin mode. Check the documentation for more info)
         """
         dataframe.loc[
@@ -398,12 +395,15 @@ class b(IStrategy):
         """
         dataframe.loc[
             (
-                (qtpylib.crossed_above(dataframe["rsi"], self.sell_rsi.value)) &  # Signal: RSI crosses above sell_rsi
-                (dataframe["tema"] > dataframe["bb_middleband"]) &  # Guard: tema above BB middle
-                (dataframe["tema"] < dataframe["tema"].shift(1)) &  # Guard: tema is falling
-                (dataframe["volume"] > 0)  # Make sure Volume is not 0
+                (
+                    qtpylib.crossed_above(dataframe["rsi"], self.sell_rsi.value)
+                )  # Signal: RSI crosses above sell_rsi
+                & (dataframe["tema"] > dataframe["bb_middleband"])  # Guard: tema above BB middle
+                & (dataframe["tema"] < dataframe["tema"].shift(1))  # Guard: tema is falling
+                & (dataframe["volume"] > 0)  # Make sure Volume is not 0
             ),
-            "exit_long"] = 1
+            "exit_long",
+        ] = 1
         # Uncomment to use shorts (Only used in futures/margin mode. Check the documentation for more info)
         """
         dataframe.loc[

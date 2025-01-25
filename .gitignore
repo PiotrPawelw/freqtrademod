@@ -5,7 +5,7 @@
 *.sqlite-wal
 logfile.txt
 config.json
-!user_data/strategy/sample_strategy.py
+!user_data/strategies/*
 !user_data/notebooks
 !user_data/models
 !user_data/freqaimodels

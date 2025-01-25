@@ -7,11 +7,8 @@
       "88": 0.017,
       "205": 0
     },
-    "trailing": {
-      "trailing_stop": true,
-      "trailing_stop_positive": 0.087,
-      "trailing_stop_positive_offset": 0.1,
-      "trailing_only_offset_is_reached": true
+    "stoploss": {
+      "stoploss": -0.172
     },
     "max_open_trades": {
       "max_open_trades": 3
@@ -23,10 +20,13 @@
       "sell_rsi": 86
     },
     "protection": {},
-    "stoploss": {
-      "stoploss": -0.172
+    "trailing": {
+      "trailing_stop": true,
+      "trailing_stop_positive": 0.15,
+      "trailing_stop_positive_offset": 0.22199999999999998,
+      "trailing_only_offset_is_reached": false
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-01-25 19:19:07.928790+00:00"
+  "export_time": "2025-01-25 19:23:21.383133+00:00"
 }

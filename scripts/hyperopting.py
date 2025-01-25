@@ -3,6 +3,7 @@
 import os
 import subprocess
 
+
 # Ścieżka do folderu z strategiami
 strategies_dir = "user_data/strategies/"
 
@@ -23,7 +24,7 @@ freqaimodels = [
     "XGBoostRFClassifier",
     "XGBoostRFRegressor",
     "XGBoostRegressor",
-    "XGBoostRegressorMultiTarget"
+    "XGBoostRegressorMultiTarget",
 ]
 
 hyperopt_losses = [
@@ -38,19 +39,11 @@ hyperopt_losses = [
     "MaxDrawDownRelativeHyperOptLoss",
     "ProfitDrawDownHyperOptLoss",
     "MultiMetricHyperOptLoss",
-    "MultiMetricHyperOptLoss"
+    "MultiMetricHyperOptLoss",
 ]
 
-spaces_options = [
-    "roi",
-    "stoploss",
-    "trailing",
-    "trades",
-    "buy",
-    "sell",
-    "trailing",
-    "all"
-]
+spaces_options = ["roi", "stoploss", "trailing", "trades", "buy", "sell", "trailing", "all"]
+
 
 def list_strategies():
     """
@@ -58,6 +51,7 @@ def list_strategies():
     """
     strategies = [f[:-3] for f in os.listdir(strategies_dir) if f.endswith(".py")]
     return strategies
+
 
 def select_option(options, prompt):
     """
@@ -81,39 +75,53 @@ def select_option(options, prompt):
         except ValueError:
             print("Wprowadź poprawny numer.")
 
+
 def optimize_strategy(strategy_name, freqaimodel, epochs, hyperopt_loss, spaces):
     """
     Uruchom hiperoptymalizację dla podanej strategii z wybranym modelem, liczbą epok, funkcją strat i przestrzenią.
     """
     print(f"Rozpoczynanie hiperoptymalizacji dla strategii: {strategy_name}")
-    print(f"Model: {freqaimodel}, Liczba epok: {epochs}, Funkcja strat: {hyperopt_loss}, Przestrzeń: {spaces}")
+    print(
+        f"Model: {freqaimodel}, Liczba epok: {epochs}, Funkcja strat: {hyperopt_loss}, Przestrzeń: {spaces}"
+    )
 
     try:
-        subprocess.run([
-            "freqtrade", "hyperopt", 
-            "--strategy", strategy_name,
-            "--epochs", str(epochs),
-            "--spaces", spaces,
-            "--config", "./config.json",
-            "--freqaimodel", freqaimodel,
-            "--hyperopt-loss", hyperopt_loss,
-        ], check=True)
+        subprocess.run(
+            [
+                "freqtrade",
+                "hyperopt",
+                "--strategy",
+                strategy_name,
+                "--epochs",
+                str(epochs),
+                "--spaces",
+                spaces,
+                "--config",
+                "./config.json",
+                "--freqaimodel",
+                freqaimodel,
+                "--hyperopt-loss",
+                hyperopt_loss,
+            ],
+            check=True,
+        )
     except subprocess.CalledProcessError as e:
         print(f"Błąd podczas hiperoptymalizacji dla strategii {strategy_name}: {e}")
+
 
 if __name__ == "__main__":
     strategies = list_strategies()
     selected_strategy = select_option(strategies, "Dostępne strategie:")
-    
+
     if selected_strategy:
         selected_freqaimodel = select_option(freqaimodels, "Dostępne modele FreqAI:")
-        
+
         if selected_freqaimodel:
             selected_hyperopt_loss = select_option(hyperopt_losses, "Dostępne funkcje strat:")
-            
+
             if selected_hyperopt_loss:
                 selected_spaces = select_option(spaces_options, "Dostępne przestrzenie (spaces):")
-                
+
                 if selected_spaces:
                     while True:
                         try:
@@ -122,4 +130,10 @@ if __name__ == "__main__":
                         except ValueError:
                             print("Wprowadź poprawną liczbę.")
 
-                    optimize_strategy(selected_strategy, selected_freqaimodel, epochs, selected_hyperopt_loss, selected_spaces)
+                    optimize_strategy(
+                        selected_strategy,
+                        selected_freqaimodel,
+                        epochs,
+                        selected_hyperopt_loss,
+                        selected_spaces,
+                    )
