@@ -4,7 +4,12 @@
 *.sqlite-shm
 *.sqlite-wal
 logfile.txt
+<<<<<<< HEAD
 config*.json
+=======
+config.json
+user_data/backtest_results/
+>>>>>>> 4abad62 (git)
 !user_data/strategies/*
 !user_data/notebooks
 !user_data/models

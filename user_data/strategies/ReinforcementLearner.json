@@ -1,8 +1,11 @@
 {
   "strategy_name": "ReinforcementLearner",
   "params": {
-    "stoploss": {
-      "stoploss": -0.1
+    "roi": {
+      "0": 0.117,
+      "11": 0.031,
+      "38": 0.019,
+      "115": 0
     },
     "trailing": {
       "trailing_stop": false,
@@ -20,13 +23,10 @@
       "sell_rsi": 70
     },
     "protection": {},
-    "roi": {
-      "0": 0.11699999999999999,
-      "11": 0.031,
-      "38": 0.019,
-      "115": 0
+    "stoploss": {
+      "stoploss": -0.158
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-01-25 17:50:36.797306+00:00"
+  "export_time": "2025-01-25 20:33:08.175449+00:00"
 }

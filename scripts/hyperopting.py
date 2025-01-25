@@ -1,139 +1,98 @@
-#!/usr/bin/env python3
-
 import os
 import subprocess
+from typing import List
 
-
-# Ścieżka do folderu z strategiami
-strategies_dir = "user_data/strategies/"
-
-freqaimodels = [
-    "ReinforcementLearner_multiproc",
-    "CatboostClassifier",
-    "CatboostClassifierMultiTarget",
-    "CatboostRegressor",
-    "CatboostRegressorMultiTarget",
-    "LightGBMClassifier",
-    "LightGBMClassifierMultiTarget",
-    "PyTorchMLPClassifier",
-    "PyTorchMLPRegressor",
-    "PyTorchTransformerRegressor",
-    "ReinforcementLearner",
-    "SKLearnRandomForestClassifier",
-    "XGBoostClassifier",
-    "XGBoostRFClassifier",
-    "XGBoostRFRegressor",
-    "XGBoostRegressor",
-    "XGBoostRegressorMultiTarget",
-]
-
-hyperopt_losses = [
-    "ShortTradeDurHyperOptLoss",
-    "ShortTradeDurHyperOptLoss",
-    "SharpeHyperOptLoss",
-    "SharpeHyperOptLossDaily",
-    "SortinoHyperOptLoss",
-    "SortinoHyperOptLossDaily",
-    "CalmarHyperOptLoss",
-    "MaxDrawDownHyperOptLoss",
-    "MaxDrawDownRelativeHyperOptLoss",
-    "ProfitDrawDownHyperOptLoss",
-    "MultiMetricHyperOptLoss",
-    "MultiMetricHyperOptLoss",
-]
-
-spaces_options = ["roi", "stoploss", "trailing", "trades", "buy", "sell", "trailing", "all"]
-
-
-def list_strategies():
+def list_files_in_directory(directory: str, extension: str) -> List[str]:
     """
-    Pobierz listę dostępnych strategii w folderze.
+    Zwraca listę plików z określonym rozszerzeniem w podanym katalogu.
+    :param directory: Ścieżka do katalogu.
+    :param extension: Rozszerzenie plików (np. ".py").
+    :return: Lista nazw plików (bez rozszerzeń).
     """
-    strategies = [f[:-3] for f in os.listdir(strategies_dir) if f.endswith(".py")]
-    return strategies
+    return [file[:-len(extension)] for file in os.listdir(directory) if file.endswith(extension)]
 
-
-def select_option(options, prompt):
+def user_choice(options: List[str], prompt: str) -> str:
     """
-    Wyświetl listę opcji i pozwól użytkownikowi wybrać jedną.
+    Wyświetla menu wyboru dla użytkownika i zwraca wybraną opcję.
+    :param options: Lista opcji do wyboru.
+    :param prompt: Tekst wyświetlany użytkownikowi.
+    :return: Wybrana opcja.
     """
-    if not options:
-        print("Brak dostępnych opcji.")
-        return None
-
     print(prompt)
     for idx, option in enumerate(options, start=1):
         print(f"{idx}. {option}")
-
     while True:
         try:
-            choice = int(input("Wybierz opcję (numer): ").strip())
+            choice = int(input("Wybierz numer: "))
             if 1 <= choice <= len(options):
                 return options[choice - 1]
             else:
-                print("Nieprawidłowy numer. Spróbuj ponownie.")
+                print("Nieprawidłowy numer, spróbuj ponownie.")
         except ValueError:
-            print("Wprowadź poprawny numer.")
+            print("Proszę podać numer.")
 
-
-def optimize_strategy(strategy_name, freqaimodel, epochs, hyperopt_loss, spaces):
+def optimize_strategy(strategy_name: str, freqaimodel: str, epochs: int, spaces: List[str]):
     """
-    Uruchom hiperoptymalizację dla podanej strategii z wybranym modelem, liczbą epok, funkcją strat i przestrzenią.
+    Uruchamia hiperoptymalizację dla podanej strategii.
+    :param strategy_name: Nazwa strategii.
+    :param freqaimodel: Wybrany model FreqAI.
+    :param epochs: Liczba epok.
+    :param spaces: Lista przestrzeni do optymalizacji.
     """
     print(f"Rozpoczynanie hiperoptymalizacji dla strategii: {strategy_name}")
-    print(
-        f"Model: {freqaimodel}, Liczba epok: {epochs}, Funkcja strat: {hyperopt_loss}, Przestrzeń: {spaces}"
-    )
-
     try:
-        subprocess.run(
-            [
-                "freqtrade",
-                "hyperopt",
-                "--strategy",
-                strategy_name,
-                "--epochs",
-                str(epochs),
-                "--spaces",
-                spaces,
-                "--config",
-                "./config.json",
-                "--freqaimodel",
-                freqaimodel,
-                "--hyperopt-loss",
-                hyperopt_loss,
-            ],
-            check=True,
-        )
+        subprocess.run([
+            "freqtrade", "hyperopt",
+            "--strategy", strategy_name,
+            "--epochs", str(epochs),
+            "--spaces", *spaces,
+            "--config", "./config.json",
+            "--freqaimodel", freqaimodel,
+            "--hyperopt-loss", "ShortTradeDurHyperOptLoss",
+        ], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Błąd podczas hiperoptymalizacji dla strategii {strategy_name}: {e}")
 
-
 if __name__ == "__main__":
-    strategies = list_strategies()
-    selected_strategy = select_option(strategies, "Dostępne strategie:")
+    # Ścieżki do katalogów
+    strategies_dir = "user_data/strategies/"
+    freqai_models_dir = "freqtrade/freqai/prediction_models/"
 
-    if selected_strategy:
-        selected_freqaimodel = select_option(freqaimodels, "Dostępne modele FreqAI:")
+    # Pobranie dostępnych strategii i modeli
+    strategies = list_files_in_directory(strategies_dir, ".py")
+    freqai_models = list_files_in_directory(freqai_models_dir, ".py")
 
-        if selected_freqaimodel:
-            selected_hyperopt_loss = select_option(hyperopt_losses, "Dostępne funkcje strat:")
+    # Wybor użytkownika
+    selected_strategy = user_choice(strategies, "Wybierz strategię:")
+    selected_model = user_choice(freqai_models, "Wybierz model FreqAI:")
 
-            if selected_hyperopt_loss:
-                selected_spaces = select_option(spaces_options, "Dostępne przestrzenie (spaces):")
+    # Pobranie liczby epok
+    while True:
+        try:
+            selected_epochs = int(input("Podaj liczbę epok: "))
+            if selected_epochs > 0:
+                break
+            else:
+                print("Liczba epok musi być większa od zera.")
+        except ValueError:
+            print("Proszę podać liczbę całkowitą.")
 
-                if selected_spaces:
-                    while True:
-                        try:
-                            epochs = int(input("Podaj liczbę epok (np. 50): ").strip())
-                            break
-                        except ValueError:
-                            print("Wprowadź poprawną liczbę.")
+    # Wybór przestrzeni optymalizacyjnych
+    spaces = ["roi", "stoploss", "trailing"]
+    selected_spaces = []
+    print("Wybierz przestrzenie optymalizacyjne (wpisz numery oddzielone przecinkami, np. 1,2):")
+    for idx, space in enumerate(spaces, start=1):
+        print(f"{idx}. {space}")
+    while True:
+        try:
+            choices = input("Twoje wybory: ").split(',')
+            selected_spaces = [spaces[int(choice) - 1] for choice in choices if 1 <= int(choice) <= len(spaces)]
+            if selected_spaces:
+                break
+            else:
+                print("Musisz wybrać co najmniej jedną przestrzeń.")
+        except (ValueError, IndexError):
+            print("Nieprawidłowy wybór, spróbuj ponownie.")
 
-                    optimize_strategy(
-                        selected_strategy,
-                        selected_freqaimodel,
-                        epochs,
-                        selected_hyperopt_loss,
-                        selected_spaces,
-                    )
+    # Uruchomienie hiperoptymalizacji
+    optimize_strategy(selected_strategy, selected_model, selected_epochs, selected_spaces)
