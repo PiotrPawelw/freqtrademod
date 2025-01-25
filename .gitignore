@@ -1,4 +1,5 @@
 # Freqtrade rules
+*.vs
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal
@@ -13,7 +14,6 @@ user_data/models/*
 user_data/notebooks/*
 freqtrade-plot.html
 freqtrade-profit-plot.html
-freqtrade/rpc/api_server/ui/*
 build_helpers/ta-lib/*
 
 # Macos related
