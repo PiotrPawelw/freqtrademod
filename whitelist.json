@@ -1,0 +1,24 @@
+{
+    "pair_whitelist": [
+        "BTC/USDT",
+        "ETH/USDT",
+        "BNB/USDT",
+        "ADA/USDT",
+        "XRP/USDT",
+        "SOL/USDT",
+        "DOT/USDT",
+        "MATIC/USDT",
+        "DOGE/USDT",
+        "SHIB/USDT",
+        "AVAX/USDT",
+        "ATOM/USDT",
+        "LINK/USDT",
+        "UNI/USDT",
+        "LTC/USDT",
+        "TRX/USDT",
+        "XLM/USDT",
+        "NEAR/USDT",
+        "FTM/USDT",
+        "ALGO/USDT"
+    ]
+}

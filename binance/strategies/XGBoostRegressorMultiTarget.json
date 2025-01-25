@@ -1,0 +1,32 @@
+{
+  "strategy_name": "XGBoostRegressorMultiTarget",
+  "params": {
+    "trailing": {
+      "trailing_stop": false,
+      "trailing_stop_positive": null,
+      "trailing_stop_positive_offset": 0.0,
+      "trailing_only_offset_is_reached": false
+    },
+    "max_open_trades": {
+      "max_open_trades": 10
+    },
+    "buy": {
+      "buy_rsi": 19
+    },
+    "sell": {
+      "sell_rsi": 88
+    },
+    "protection": {},
+    "roi": {
+      "0": 0.279,
+      "33": 0.08299999999999999,
+      "44": 0.031,
+      "120": 0
+    },
+    "stoploss": {
+      "stoploss": -0.346
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2025-01-18 23:34:29.262999+00:00"
+}

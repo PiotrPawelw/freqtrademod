@@ -1,0 +1,13 @@
+{
+    "rl_config": {
+        "enabled": true,
+        "agent_type": "ppo",
+        "cpu_count": 2,
+        "training_epochs": 500,
+        "gamma": 0.99,
+        "reward_function": "custom_reward",
+        "state_space": ["price", "volume", "rsi", "macd"],
+        "action_space": ["buy", "sell", "hold"],
+        "model_save_path": "models/rl_model"
+    }
+}

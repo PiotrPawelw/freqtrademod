@@ -1,0 +1,32 @@
+{
+  "strategy_name": "PyTorchMLPClassifier",
+  "params": {
+    "trailing": {
+      "trailing_stop": false,
+      "trailing_stop_positive": null,
+      "trailing_stop_positive_offset": 0.0,
+      "trailing_only_offset_is_reached": false
+    },
+    "max_open_trades": {
+      "max_open_trades": 3
+    },
+    "buy": {
+      "buy_rsi": 37
+    },
+    "sell": {
+      "sell_rsi": 82
+    },
+    "protection": {},
+    "roi": {
+      "0": 0.079,
+      "25": 0.067,
+      "59": 0.032,
+      "160": 0
+    },
+    "stoploss": {
+      "stoploss": -0.128
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2025-01-18 13:30:49.381221+00:00"
+}

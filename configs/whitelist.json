@@ -1,0 +1,12 @@
+{
+    "pair_whitelist": [
+
+  "BTC/USDT",
+  "ENA/USDT",
+  "XRP/USDT",
+  "RAY/USDT",
+  "ETH/USDT",
+  "LTC/USDT"
+],
+
+}

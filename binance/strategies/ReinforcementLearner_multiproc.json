@@ -1,0 +1,32 @@
+{
+  "strategy_name": "ReinforcementLearner_multiproc",
+  "params": {
+    "trailing": {
+      "trailing_stop": false,
+      "trailing_stop_positive": null,
+      "trailing_stop_positive_offset": 0.0,
+      "trailing_only_offset_is_reached": false
+    },
+    "max_open_trades": {
+      "max_open_trades": 10
+    },
+    "buy": {
+      "buy_rsi": 26
+    },
+    "sell": {
+      "sell_rsi": 82
+    },
+    "protection": {},
+    "roi": {
+      "0": 0.259,
+      "40": 0.084,
+      "85": 0.028,
+      "187": 0
+    },
+    "stoploss": {
+      "stoploss": -0.349
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2025-01-19 00:13:24.158505+00:00"
+}

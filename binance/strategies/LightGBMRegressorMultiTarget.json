@@ -1,0 +1,32 @@
+{
+  "strategy_name": "LightGBMRegressorMultiTarget",
+  "params": {
+    "trailing": {
+      "trailing_stop": false,
+      "trailing_stop_positive": null,
+      "trailing_stop_positive_offset": 0.0,
+      "trailing_only_offset_is_reached": false
+    },
+    "max_open_trades": {
+      "max_open_trades": 10
+    },
+    "buy": {
+      "buy_rsi": 30
+    },
+    "sell": {
+      "sell_rsi": 87
+    },
+    "protection": {},
+    "roi": {
+      "0": 0.07400000000000001,
+      "21": 0.032,
+      "51": 0.016,
+      "83": 0
+    },
+    "stoploss": {
+      "stoploss": -0.273
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2025-01-19 01:02:29.848594+00:00"
+}

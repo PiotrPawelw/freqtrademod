@@ -1,0 +1,28 @@
+{
+  "strategy_name": "SimpleDropAndSellStrategy",
+  "params": {
+    "stoploss": {
+      "stoploss": -0.005
+    },
+    "trailing": {
+      "trailing_stop": false,
+      "trailing_stop_positive": null,
+      "trailing_stop_positive_offset": 0.0,
+      "trailing_only_offset_is_reached": false
+    },
+    "max_open_trades": {
+      "max_open_trades": 3
+    },
+    "buy": {},
+    "sell": {},
+    "protection": {},
+    "roi": {
+      "0": 0.155,
+      "20": 0.092,
+      "73": 0.034,
+      "135": 0
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2025-01-18 15:26:31.345839+00:00"
+}

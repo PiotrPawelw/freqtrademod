@@ -1,0 +1,10 @@
+[
+  {
+    "method": "StaticPairList"
+  },
+  {
+    "method": "VolatilityFilter",
+    "lookback_days": 10,
+    "refresh_period": 1800
+  }
+]

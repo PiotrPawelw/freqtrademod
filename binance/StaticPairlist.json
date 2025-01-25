@@ -1,0 +1,16 @@
+{
+"pairlists": [
+    {
+        "method": "VolumePairList",
+        "number_assets": 300,
+        "sort_key": "quoteVolume",
+        "min_value": 100,
+        "refresh_period": 1800
+        },
+        {
+        "method": "VolatilityFilter",
+        "lookback_period": 24,
+        "min_volatility": 0.009
+},
+        ],
+}

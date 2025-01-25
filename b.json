@@ -1,0 +1,91 @@
+{
+    "$schema": "https://schema.freqtrade.io/schema.json",
+    "max_open_trades": 10,
+    "stake_currency": "ETH",
+    "stake_amount": "unlimited",
+    "tradable_balance_ratio": 1.0,
+    "fiat_display_currency": "PLN",
+    "dry_run": true,
+    "dry_run_wallet": 1000,
+    "cancel_open_orders_on_exit": false,
+    "trading_mode": "spot",
+    "margin_mode": "",
+    "futures": {
+        "enabled": false,
+        "leverage": {
+            "enabled": false,
+            "type": "isolated",
+            "leverage": 20
+        }
+    },
+    "unfilledtimeout": {
+        "entry": 10,
+        "exit": 10,
+        "exit_timeout_count": 0,
+        "unit": "minutes"
+    },
+    "entry_pricing": {
+        "price_side": "same",
+        "use_order_book": true,
+        "order_book_top": 1,
+        "price_last_balance": 0.0,
+        "check_depth_of_market": {
+            "enabled": false,
+            "bids_to_ask_delta": 1
+        }
+    },
+    "exit_pricing": {
+        "price_side": "same",
+        "use_order_book": true,
+        "order_book_top": 1
+    },
+    "exchange": {
+        "name": "binance",
+        "key": "idYXBJEYAr5YtyNAYHGf0MhMAKgukIvN0hPRcB7Y2ERmqAvDVDlBxGc2a5gLe7CU",
+        "secret": "9B2zwkYgHIf7KPCexQOz3o9C7Qp7QUOi6ifbl6IL7ByfcJ8P3Ip9IwL6DpdIvtXm",
+        "ccxt_config": {},
+        "ccxt_async_config": {},
+"USDT/ETH"
+
+        ],
+        "pair_blacklist": [
+            "BNB/.*"
+        ],
+//        "leverage": {
+ //           "SWARMS/USDT:USDT": 20
+ //       }
+    },
+    "pairlists": [
+        {
+            "method": "StaticPairList",
+            "number_assets": 20,
+            "sort_key": "quoteVolume",
+            "min_value": 0,
+            "refresh_period": 1800
+        }
+    ],
+    "telegram": {
+        "enabled": false,
+        "token": "",
+        "chat_id": ""
+    },
+    "api_server": {
+        "enabled": true,
+        "listen_ip_address": "192.168.1.214",
+        "listen_port": 8080,
+        "verbosity": "error",
+        "enable_openapi": false,
+        "jwt_secret_key": "7ea9cfd3a7d80e7fecb22546cf3eb7c1b35a575fbd4b589961f58b2500eacde0",
+        "ws_token": "kTlmO6U3xGQtSCBItH5lJtPaOefGq2Irgw",
+        "CORS_origins": [],
+        "username": "freqtrader",
+        "password": "freqtrader"
+    },
+    "bot_name": "freqtrade",
+    "initial_state": "running",
+    "force_entry_enable": true,
+    "internals": {
+        "process_throttle_secs": 5
+    }
+}
+
