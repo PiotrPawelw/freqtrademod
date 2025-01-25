@@ -45,7 +45,11 @@ spaces_options = [
     "roi",
     "stoploss",
     "trailing",
-    "combined"
+    "trades",
+    "buy",
+    "sell",
+    "trailing",
+    "all"
 ]
 
 def list_strategies():
@@ -90,7 +94,7 @@ def optimize_strategy(strategy_name, freqaimodel, epochs, hyperopt_loss, spaces)
             "--strategy", strategy_name,
             "--epochs", str(epochs),
             "--spaces", spaces,
-            "--config", "./1.json",
+            "--config", "./config.json",
             "--freqaimodel", freqaimodel,
             "--hyperopt-loss", hyperopt_loss,
         ], check=True)

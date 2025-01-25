@@ -130,8 +130,7 @@ class ClientProtocol:
         initial_requests = [
             {
                 "type": "subscribe",  # The subscribe request should always be first
-                # The message types we want
-                "data": ["analyzed_df", "whitelist"],
+                "data": ["analyzed_df", "whitelist"],  # The message types we want
             },
             {
                 "type": "whitelist",

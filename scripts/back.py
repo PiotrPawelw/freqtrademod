@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 import subprocess
 
@@ -24,7 +22,7 @@ def backtest_all_strategies():
                     "--strategy", strategy_name,  # Nazwa strategii
                     "--timerange", "20250101-",
                     "--freqaimodel", "CatboostRegressor",
-		    "--config", "./1.json",  # Zakres czasowy (dostosuj do swoich potrzeb)             # Liczba epok (można dostosować, ale w backtestach to nie ma wpływu)
+		    "--config", "./config.json",  # Zakres czasowy (dostosuj do swoich potrzeb)             # Liczba epok (można dostosować, ale w backtestach to nie ma wpływu)
                 ], check=True)
             except subprocess.CalledProcessError as e:
                 print(f"Błąd podczas backtestu dla strategii {strategy_name}: {e}")

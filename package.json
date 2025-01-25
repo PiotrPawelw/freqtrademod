@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "node-xmpp": "^1.1.0"
+  }
+}
