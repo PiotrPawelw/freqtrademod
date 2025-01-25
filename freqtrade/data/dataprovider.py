@@ -53,9 +53,9 @@ class DataProvider:
         self.__slice_date: datetime | None = None
 
         self.__cached_pairs_backtesting: dict[PairWithTimeframe, DataFrame] = {}
-        self.__producer_pairs_df: dict[str, dict[PairWithTimeframe, tuple[DataFrame, datetime]]] = (
-            {}
-        )
+        self.__producer_pairs_df: dict[
+            str, dict[PairWithTimeframe, tuple[DataFrame, datetime]]
+        ] = {}
         self.__producer_pairs: dict[str, list[str]] = {}
         self._msg_queue: deque = deque()
 

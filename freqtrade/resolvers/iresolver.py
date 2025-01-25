@@ -98,7 +98,6 @@ class IResolver:
 
             module = importlib.util.module_from_spec(spec)
             try:
-                # type: ignore # importlib does not use typehints
                 spec.loader.exec_module(module)
             except (
                 AttributeError,
