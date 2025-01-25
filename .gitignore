@@ -15,6 +15,7 @@ user_data/notebooks/*
 freqtrade-plot.html
 freqtrade-profit-plot.html
 build_helpers/ta-lib/*
+1.json
 
 # Macos related
 .DS_Store
