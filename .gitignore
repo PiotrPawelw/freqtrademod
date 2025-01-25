@@ -4,7 +4,7 @@
 *.sqlite-shm
 *.sqlite-wal
 logfile.txt
-config.json
+config*.json
 !user_data/strategies/*
 !user_data/notebooks
 !user_data/models
