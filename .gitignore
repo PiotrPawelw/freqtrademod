@@ -8,6 +8,7 @@ logfile.txt
 config*.json
 =======
 config.json
+user_data/hyperopt_results/
 user_data/backtest_results/
 >>>>>>> 4abad62 (git)
 !user_data/strategies/*

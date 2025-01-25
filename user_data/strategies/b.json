@@ -1,14 +1,14 @@
 {
   "strategy_name": "b",
   "params": {
-    "roi": {
-      "0": 0.116,
-      "28": 0.028,
-      "88": 0.017,
-      "205": 0
-    },
     "stoploss": {
       "stoploss": -0.172
+    },
+    "trailing": {
+      "trailing_stop": true,
+      "trailing_stop_positive": 0.127,
+      "trailing_stop_positive_offset": 0.212,
+      "trailing_only_offset_is_reached": false
     },
     "max_open_trades": {
       "max_open_trades": 2
@@ -20,13 +20,13 @@
       "sell_rsi": 86
     },
     "protection": {},
-    "trailing": {
-      "trailing_stop": true,
-      "trailing_stop_positive": 0.127,
-      "trailing_stop_positive_offset": 0.21200000000000002,
-      "trailing_only_offset_is_reached": false
+    "roi": {
+      "0": 0.138,
+      "10": 0.09,
+      "64": 0.031,
+      "121": 0
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-01-25 19:58:43.822926+00:00"
+  "export_time": "2025-01-25 21:34:04.772235+00:00"
 }
