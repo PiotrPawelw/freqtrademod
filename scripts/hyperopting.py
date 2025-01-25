@@ -2,6 +2,7 @@ import os
 import subprocess
 from typing import List
 
+
 def list_files_in_directory(directory: str, extension: str) -> List[str]:
     """
     Zwraca listę plików z określonym rozszerzeniem w podanym katalogu.
@@ -9,7 +10,8 @@ def list_files_in_directory(directory: str, extension: str) -> List[str]:
     :param extension: Rozszerzenie plików (np. ".py").
     :return: Lista nazw plików (bez rozszerzeń).
     """
-    return [file[:-len(extension)] for file in os.listdir(directory) if file.endswith(extension)]
+    return [file[: -len(extension)] for file in os.listdir(directory) if file.endswith(extension)]
+
 
 def user_choice(options: List[str], prompt: str) -> str:
     """
@@ -31,6 +33,7 @@ def user_choice(options: List[str], prompt: str) -> str:
         except ValueError:
             print("Proszę podać numer.")
 
+
 def optimize_strategy(strategy_name: str, freqaimodel: str, epochs: int, spaces: List[str]):
     """
     Uruchamia hiperoptymalizację dla podanej strategii.
@@ -41,17 +44,28 @@ def optimize_strategy(strategy_name: str, freqaimodel: str, epochs: int, spaces:
     """
     print(f"Rozpoczynanie hiperoptymalizacji dla strategii: {strategy_name}")
     try:
-        subprocess.run([
-            "freqtrade", "hyperopt",
-            "--strategy", strategy_name,
-            "--epochs", str(epochs),
-            "--spaces", *spaces,
-            "--config", "./config.json",
-            "--freqaimodel", freqaimodel,
-            "--hyperopt-loss", "ShortTradeDurHyperOptLoss",
-        ], check=True)
+        subprocess.run(
+            [
+                "freqtrade",
+                "hyperopt",
+                "--strategy",
+                strategy_name,
+                "--epochs",
+                str(epochs),
+                "--spaces",
+                *spaces,
+                "--config",
+                "./config.json",
+                "--freqaimodel",
+                freqaimodel,
+                "--hyperopt-loss",
+                "ShortTradeDurHyperOptLoss",
+            ],
+            check=True,
+        )
     except subprocess.CalledProcessError as e:
         print(f"Błąd podczas hiperoptymalizacji dla strategii {strategy_name}: {e}")
+
 
 if __name__ == "__main__":
     # Ścieżki do katalogów
@@ -85,8 +99,10 @@ if __name__ == "__main__":
         print(f"{idx}. {space}")
     while True:
         try:
-            choices = input("Twoje wybory: ").split(',')
-            selected_spaces = [spaces[int(choice) - 1] for choice in choices if 1 <= int(choice) <= len(spaces)]
+            choices = input("Twoje wybory: ").split(",")
+            selected_spaces = [
+                spaces[int(choice) - 1] for choice in choices if 1 <= int(choice) <= len(spaces)
+            ]
             if selected_spaces:
                 break
             else:

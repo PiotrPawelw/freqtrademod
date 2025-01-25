@@ -1,8 +1,8 @@
-
 # user_data/ai_models/my_ai_model.py
-from freqtrade AI import BaseModel
 import numpy as np
+from freqtradeAI import BaseModel
 from sklearn.ensemble import RandomForestClassifier
+
 
 class MyAIModel(BaseModel):
     def __init__(self):

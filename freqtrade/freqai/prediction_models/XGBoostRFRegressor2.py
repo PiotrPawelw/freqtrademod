@@ -1,13 +1,17 @@
 import logging
 from typing import Any
-from xgboost import XGBRFRegressor
-from sklearn.model_selection import train_test_split
-from freqtrade.freqai.base_models.BaseRegressionModel import BaseRegressionModel
-from freqtrade.freqai.data_kitchen import FreqaiDataKitchen
+
 import numpy as np
 from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import train_test_split
+from xgboost import XGBRFRegressor
+
+from freqtrade.freqai.base_models.BaseRegressionModel import BaseRegressionModel
+from freqtrade.freqai.data_kitchen import FreqaiDataKitchen
+
 
 logger = logging.getLogger(__name__)
+
 
 class XGBoostRFRegressor2(BaseRegressionModel):
     """
@@ -21,27 +25,27 @@ class XGBoostRFRegressor2(BaseRegressionModel):
         :param data_dictionary: słownik zawierający dane do treningu, testu oraz etykiety
         :param dk: Obiekt FreqaiDataKitchen
         """
-        
+
         # Przygotowanie danych treningowych
         X = data_dictionary["train_features"]
         y = data_dictionary["train_labels"]
 
         # Inżynieria cech (możemy dodać więcej cech lub normalizować dane)
         X = self.feature_engineering(X)
-        
+
         # Podział danych na zestawy treningowe i walidacyjne
         X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.1, random_state=42)
-        
+
         # Definiowanie parametrów modelu
         model_params = {
-            'n_estimators': 100, 
-            'max_depth': 6, 
-            'learning_rate': 0.05,
-            'subsample': 0.9,
-            'colsample_bytree': 0.8,
-            'random_state': 42
+            "n_estimators": 100,
+            "max_depth": 6,
+            "learning_rate": 0.05,
+            "subsample": 0.9,
+            "colsample_bytree": 0.8,
+            "random_state": 42,
         }
-        
+
         model = XGBRFRegressor(**model_params)
 
         # Trenowanie modelu
@@ -50,14 +54,14 @@ class XGBoostRFRegressor2(BaseRegressionModel):
             y=y_train,
             eval_set=[(X_val, y_val)],
             early_stopping_rounds=10,  # Zatrzymanie treningu przy braku poprawy
-            verbose=True
+            verbose=True,
         )
 
         # Monitorowanie wydajności
         y_pred = model.predict(X_val)
         mae = mean_absolute_error(y_val, y_pred)
         logger.info(f"Mean Absolute Error (MAE): {mae}")
-        
+
         # Zwrócenie wytrenowanego modelu
         return model
 
@@ -69,9 +73,10 @@ class XGBoostRFRegressor2(BaseRegressionModel):
         """
         # Przykład: normalizacja danych
         from sklearn.preprocessing import StandardScaler
+
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(X)
-        
+
         # Można dodać dodatkowe cechy, np. logarytmiczne przekształcenia, różnice cen, itp.
         # Przykład dodania różnic cenowych
         X_diff = np.diff(X_scaled, axis=0)
@@ -87,7 +92,9 @@ class XGBoostRFRegressor2(BaseRegressionModel):
         :return: prognozy modelu
         """
         X = data_dictionary["test_features"]
-        X = self.feature_engineering(X)  # Zastosowanie tej samej inżynierii cech do danych testowych
+        X = self.feature_engineering(
+            X
+        )  # Zastosowanie tej samej inżynierii cech do danych testowych
         return model.predict(X)
 
     def decide(self, predictions: np.ndarray, threshold: float = 0.5) -> int:
@@ -103,4 +110,3 @@ class XGBoostRFRegressor2(BaseRegressionModel):
             return -1  # Sygnał sprzedaży
         else:
             return 0  # Brak decyzji
-
